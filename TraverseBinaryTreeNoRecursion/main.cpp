@@ -42,6 +42,7 @@ void CreateBinaryTree(Node **node)
     CreateBinaryTree(&((*node)->rChild));
 }
 
+// 先序遍历
 void PreOrderNoRecursion(Node *node, stack<Node *> &sta)
 {
     while (!sta.empty())
@@ -63,6 +64,27 @@ void PreOrderNoRecursion(Node *node, stack<Node *> &sta)
     return;
 }
 
+// 中序遍历
+void MidOrderNoRecursion(Node *node, stack<Node *>&sta)
+{
+    while (!sta.empty())
+    {
+        while (node->lChild != NULL)
+        {
+            sta.push(node->lChild);
+            node = node->lChild;
+        }
+
+        Node *temp = sta.top();
+        cout << temp->data << " ";
+        sta.pop();
+        if (temp->rChild != NULL)
+        {
+            sta.push(temp->rChild);
+            node = temp->rChild;
+        }
+    }
+}
 
 int main(int argc, const char * argv[])
 {
@@ -76,6 +98,14 @@ int main(int argc, const char * argv[])
     nodeStack.push(node);
     PreOrderNoRecursion(node, nodeStack);
     cout << endl;
+
+    cout << "非递归中序遍历的结果为：";
+    stack<Node *> nodeStackM;
+    // 首先根节点入栈
+    nodeStackM.push(node);
+    MidOrderNoRecursion(node, nodeStackM);
+    cout << endl;
+
 
 
 
